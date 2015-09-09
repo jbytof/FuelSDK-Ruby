@@ -347,6 +347,10 @@ module FuelSDK
 		include Objects::Soap::Upsert
 	end
 
+	class Group < Objects::Base
+		include Objects::Soap::Read
+	end
+
 	class UnsubEvent < Objects::Base
 		attr_accessor :get_since_last_batch
 		include Objects::Soap::Read
