@@ -204,8 +204,8 @@ module FuelSDK
 			message = {'ObjectType' => object_type, 'Properties' => properties}
 
 			if filter and filter.kind_of? Hash
-				message['Filter'] = filter
-				message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:SimpleFilterPart' } }
+				message['Filter'] = filter.merge!(:'@xsi:type' => 'tns:SimpleFilterPart')
+				#message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:SimpleFilterPart' } }
 
 				if filter.has_key?('LogicalOperator')
 					message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:ComplexFilterPart' }}
@@ -258,8 +258,8 @@ module FuelSDK
 			#
 
 			message = {
-				'Objects' => properties,
-				:attributes! => { 'Objects' => { 'xsi:type' => ('tns:' + object_type) } }
+				'Objects' => properties.merge!(:'@xsi:type' => ('tns:' + object_type))
+				#:attributes! => { 'Objects' => { 'xsi:type' => ('tns:' + object_type) } }
 			}
 
 			if upsert
