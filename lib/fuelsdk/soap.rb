@@ -208,10 +208,14 @@ module FuelSDK
 				#message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:SimpleFilterPart' } }
 
 				if filter.has_key?('LogicalOperator')
-					message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:ComplexFilterPart' }}
-					message['Filter'][:attributes!] = {
-						'LeftOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' },
-					'RightOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' }}
+					message['Filter'] = filter.merge!(:'@xsi:type' => 'tns:ComplexFilterPart')
+					message['Filter']['LeftOperand'].merge!(:'@xsi:type' => 'tns:SimpleFilterPart')
+					message['Filter']['RightOperand'].merge!(:'@xsi:type' => 'tns:SimpleFilterPart')
+
+					#message[:attributes!] = { 'Filter' => { 'xsi:type' => 'tns:ComplexFilterPart' }}
+					# message['Filter'][:attributes!] = {
+					# 	'LeftOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' },
+					# 'RightOperand' => { 'xsi:type' => 'tns:SimpleFilterPart' }}
 				end
 			end
 			message = {'RetrieveRequest' => message}
